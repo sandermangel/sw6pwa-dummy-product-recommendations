@@ -46,17 +46,22 @@
 </template>
 
 <script>
-import { useUser } from '@shopware-pwa/composables';
 import useRecommendations from './useRecommendations'
-import { SfLoader } from "@storefront-ui/vue"
-import { SfProductCard, SfAddToCart } from "@storefront-ui/vue"
-import { useAddToCart } from "@shopware-pwa/composables"
+import { useUser, useAddToCart } from '@shopware-pwa/composables';
+import { SfProductCard, SfAddToCart, SfLoader } from "@storefront-ui/vue"
 
 export default {
     name: "ProductRecommendations",
     components: {
         SfProductCard,
         SfLoader
+    },
+
+    data () {
+        return {
+            loading: true,
+            recommendations: []
+        }
     },
 
     setup () {
@@ -69,17 +74,10 @@ export default {
         }
     },
 
-    data () {
-        return {
-            loading: true,
-            recommendations: []
-        }
-    },
-
     created () {
         useRecommendations.getRecommendations()
             .then(recommendations => {
-                this.recommendations = recommendations.slice(0, 5);
+                this.recommendations = recommendations;
             })
             .catch(error => console.log(error))
             .finally(() => {
