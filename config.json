@@ -1,0 +1,10 @@
+{
+    "slots": [
+      {
+        "name": "product-page-details-after",
+        "file": "productListing.vue"
+      }
+    ],
+    "settings": {}
+  }
+  
