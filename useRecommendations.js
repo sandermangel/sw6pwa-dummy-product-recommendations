@@ -1,10 +1,8 @@
 import axios from 'axios';
 
 export default {
-    getRecommendations () {
-        return axios.get('https://fakestoreapi.com/products')
-            .then(response => {
-                return response.data;
-            })
+    async getRecommendations () {
+        const response = await axios.get('https://fakestoreapi.com/products');
+        return response.data;
     }
 }
