@@ -9,7 +9,7 @@
             </div>
         </header>
         <div class="cms-element-product-listing">
-            <SfLoader :loading="loading" class="cms-element-product-listing__loader" />
+            <SfLoader :loading="isLoading" class="cms-element-product-listing__loader" />
 
             <div v-if="recommendations.length" class="cms-element-product-listing__wrapper">
                 <transition-group
@@ -18,7 +18,7 @@
                     name="cms-element-product-listing__slide"
                     class="cms-element-product-listing__list"
                     style="display: flex"
-                    :class="{ 'cms-element-product-listing__list--blur': loading }"
+                    :class="{ 'cms-element-product-listing__list--blur': isLoading }"
                 >
                     <SfProductCard
                         v-for="(item, i) in recommendations"
@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import useRecommendations from './useRecommendations'
+import { useRecommendations } from './useRecommendations'
 import { useUser, useAddToCart } from '@shopware-pwa/composables';
 import { SfProductCard, SfAddToCart, SfLoader } from "@storefront-ui/vue"
-
+import { computed, watch } from '@vue/composition-api'
 
 export default {
     name: "ProductRecommendations",
@@ -59,6 +59,7 @@ export default {
         SfProductCard,
         SfLoader
     },
+
     props: {
         slotContext: {
             type: Object,
@@ -66,34 +67,28 @@ export default {
         }
     },
 
-    data () {
-        return {
-            loading: true,
-            recommendations: []
-        }
-    },
-
     setup() {
         const { user } = useUser();
+        const {
+            recommendations, 
+            apiError, 
+            isLoading
+        } = useRecommendations();
         
-        const userNameLabel =  user?.value?.firstName || 'YOU'
+        const userNameLabel = computed(() => {
+            return user?.value?.firstName || 'YOU'
+        })
+
+        watch (apiError, (errorMessage) =>  {
+            console.log(errorMessage)
+        })
 
         return {
-            userNameLabel
-        }
-    },
-
-    async created() {
-        try {
-            let recommendations = await useRecommendations.getRecommendations(
-                this.slotContext.id
-            )
-            this.recommendations = recommendations
-        } catch {
-            console.log(error)
-        } finally {
-            this.loading = false
+            userNameLabel,
+            isLoading,
+            recommendations
         }
     }
+    
 }
 </script>

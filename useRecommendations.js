@@ -1,21 +1,40 @@
 import axios from 'axios';
+import { ref } from '@vue/composition-api';
 
-export default {
-    async getRecommendations (productId) {
+const useRecommendations = () => {
+    const recommendations = ref([])
+    const apiError = ref('')
+    const isLoading = ref(true)
+
+    const getRecommendations = async (productId) => {
+        isLoading.value = true
         try {
-            let response = await axios.get('https://fakestoreapi.com/products?productId=' + productId);
-            return response.data.slice(0, 5).map((item) => {
+            let { data } = await axios.get('https://fakestoreapi.com/products?productId=' + productId);
+
+            recommendations.value = data.slice(0, 5).map((item) => {
                 return {
                     id: item.id,
                     title: item.title,
                     image: item.image,
-                    price: '€' + item.price,
+                    price: `€${item.price}`,
                     specialPrice: null,
-                    rating: Math.floor(Math.random() * 3) + 1
+                    rating: Math.floor(Math.random() * 3) + 2
                 }
             })
+
+            isLoading.value = false
         } catch(error) {
-            throw new Error(error.response.data.message)
+            apiError.value = error.response.data.message
         }
     }
+
+    getRecommendations()
+
+    return { 
+        recommendations, 
+        apiError,
+        isLoading
+    }
 }
+
+export { useRecommendations }
