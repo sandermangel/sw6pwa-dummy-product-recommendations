@@ -68,22 +68,22 @@ export default {
     setup () {
         const { user } = useUser();
         
-        const userNameLabel =  user?.value?.firstName || 'YOU' ;
+        const userNameLabel =  user?.value?.firstName || 'YOU'
 
         return {
             userNameLabel
         }
     },
 
-    created () {
-        useRecommendations.getRecommendations()
-            .then(recommendations => {
-                this.recommendations = recommendations;
-            })
-            .catch(error => console.log(error))
-            .finally(() => {
-                this.loading = false
-            })
+    async created() {
+        try {
+            let recommendations = await useRecommendations.getRecommendations()
+            this.recommendations = recommendations
+        } catch {
+            console.log(error)
+        } finally {
+            this.loading = false
+        }
     }
 }
 </script>
