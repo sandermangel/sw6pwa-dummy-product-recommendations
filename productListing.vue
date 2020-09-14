@@ -84,8 +84,6 @@ export default {
     },
 
     async created() {
-        console.log('setup')
-        console.log(this.slotContext.id)
         try {
             let recommendations = await useRecommendations.getRecommendations(
                 this.slotContext.id
