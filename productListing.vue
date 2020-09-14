@@ -51,11 +51,19 @@ import useRecommendations from './useRecommendations'
 import { useUser, useAddToCart } from '@shopware-pwa/composables';
 import { SfProductCard, SfAddToCart, SfLoader } from "@storefront-ui/vue"
 
+
 export default {
     name: "ProductRecommendations",
+
     components: {
         SfProductCard,
         SfLoader
+    },
+    props: {
+        slotContext: {
+            type: Object,
+            default: null
+        }
     },
 
     data () {
@@ -65,7 +73,7 @@ export default {
         }
     },
 
-    setup () {
+    setup() {
         const { user } = useUser();
         
         const userNameLabel =  user?.value?.firstName || 'YOU'
@@ -76,8 +84,12 @@ export default {
     },
 
     async created() {
+        console.log('setup')
+        console.log(this.slotContext.id)
         try {
-            let recommendations = await useRecommendations.getRecommendations()
+            let recommendations = await useRecommendations.getRecommendations(
+                this.slotContext.id
+            )
             this.recommendations = recommendations
         } catch {
             console.log(error)

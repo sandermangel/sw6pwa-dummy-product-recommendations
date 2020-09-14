@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export default {
-    async getRecommendations () {
+    async getRecommendations (productId) {
         try {
-            let response = await axios.get('https://fakestoreapi.com/products');
+            let response = await axios.get('https://fakestoreapi.com/products?productId=' + productId);
             return response.data.slice(0, 5).map((item) => {
                 return {
                     id: item.id,
