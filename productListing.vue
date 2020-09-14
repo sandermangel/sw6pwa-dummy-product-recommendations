@@ -1,5 +1,5 @@
 <template>
-        <section>
+    <section>
         <header class="sf-heading">
             <h2 class="sf-heading__title sf-heading__title--h2">
                 Have you seen these?
@@ -21,14 +21,14 @@
                     :class="{ 'cms-element-product-listing__list--blur': loading }"
                 >
                     <SfProductCard
-                        v-for="(product, i) in recommendations"
-                        :key="product.id"
-                        :title="product.title"
-                        :image="product.image"
-                        :special-price="product.specialPrice"
-                        :regular-price="product.price"
+                        v-for="(item, i) in recommendations"
+                        :key="item.id"
+                        :title="item.title"
+                        :image="item.image"
+                        :special-price="item.specialPrice"
+                        :regular-price="item.price"
                         :max-rating="5"
-                        :score-rating="product.rating"
+                        :score-rating="item.rating"
                         :image-width="700"
                         :image-height="1000"
                         class="sw-product-card"
