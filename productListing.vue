@@ -80,7 +80,7 @@ export default {
         })
 
         watch (apiError, (errorMessage) =>  {
-            console.log(errorMessage)
+            console.error(errorMessage)
         })
 
         return {
