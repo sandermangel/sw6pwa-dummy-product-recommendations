@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { ref } from '@vue/composition-api';
 
-const useRecommendations = () => {
+const useRecommendations = (productId) => {
     const recommendations = ref([])
     const apiError = ref('')
     const isLoading = ref(true)
 
-    const getRecommendations = async (productId) => {
+    const getRecommendations = async () => {
         isLoading.value = true
         try {
             let { data } = await axios.get('https://fakestoreapi.com/products?productId=' + productId);

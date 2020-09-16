@@ -48,8 +48,8 @@
 
 <script>
 import { useRecommendations } from './useRecommendations'
-import { useUser, useAddToCart } from '@shopware-pwa/composables';
-import { SfProductCard, SfAddToCart, SfLoader } from "@storefront-ui/vue"
+import { useUser } from '@shopware-pwa/composables';
+import { SfProductCard, SfLoader } from "@storefront-ui/vue"
 import { computed, watch } from '@vue/composition-api'
 
 export default {
@@ -67,13 +67,13 @@ export default {
         }
     },
 
-    setup() {
+    setup(props) {
         const { user } = useUser();
         const {
             recommendations, 
             apiError, 
             isLoading
-        } = useRecommendations();
+        } = useRecommendations(props.slotContext.id)
         
         const userNameLabel = computed(() => {
             return user?.value?.firstName || 'YOU'
