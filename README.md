@@ -7,7 +7,13 @@ Please note, this plugin is for demo purposes only.
 ![Product Recommendations][prod-detail-page-view]
 
 ## Compatibility 
-Shopware 6.3
+- Shopware 6.3
+- Shopware PWA
+
+## Thank you
+Without the endless patience of these people I wouldn't have been able to write this code.
+- [Irene Iaccio](https://twitter.com/nuovecode)
+- [Dominic Klein](https://twitter.com/elkmod)
 
 
 
